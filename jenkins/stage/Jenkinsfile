@@ -1,0 +1,59 @@
+pipeline {
+    agent any // Adjust this label according to your Jenkins setup
+
+    environment {
+        DOCKER_LOGIN = credentials('docker-credentials-id') // Jenkins credentials ID for Docker
+        DOCKER_PASS = credentials('docker-password-id') // Jenkins credentials ID for Docker password
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                script {
+                    sh """
+                        echo \$DOCKER_PASS | docker login -u \$DOCKER_LOGIN --password-stdin
+                    """
+                }
+            }
+        }
+
+        stage('Stop and Remove Containers') {
+            steps {
+                script {
+                    sh """
+                        docker system prune -f
+                        docker compose -f docker-compose-staging.yml down --volumes
+                        docker compose -f docker-compose-staging.yml rm -f
+                        docker images --filter "dangling=true" -q | xargs -r docker rmi -f
+                        docker volume ls -qf dangling=true | xargs -r docker volume rm
+                    """
+                }
+            }
+        }
+
+        stage('Build and Start Docker Images') {
+            steps {
+                script {
+                    sh """
+                        docker compose -f docker-compose-staging.yml build --no-cache
+                        docker compose -f docker-compose-staging.yml up -d
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                // Clean up any remaining resources or perform any final steps here if needed
+            }
+        }
+    }
+}
