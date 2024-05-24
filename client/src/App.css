@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+body,
+#root {
+    /* overflow-x: hidden; */
+    height: 100%;
+    /* background-color: #1A1A1A; */
+    background-color: #0C0F17;
+}
+
+/* body,
+html,
+#root,
+.App {
+    height: 100%;
+} */
+
+body {
+    --card-background-color: #fff;
+    --greyED: #ededed;
+    --blueBE: #2596be;
+    --blueBE-nav: #2596be;
+    --blueF2: #d3eaf2;
+    --green95: #83d495;
+    --red80: #de8980;
+    --yellow8B: #f6f18b;
+    --black20: #232020;
+    --grey74: #747474;
+    --grey274-input: #596274;
+    --grey274-tabs: #596274;
+    --grey89: rgb(87, 86, 89);
+    --grey50: #525050;
+    --grey67: #676767;
+    --grey54: #344054;
+    --grey59: #575659;
+    --greyF1: #f1f1f1;
+    --white-input: #fff;
+    --white-tab: #fff;
+    --white-transparent: #fff;
+    --white-bg: #fff;
+    --grey71: grey;
+}
+
+body.dark {
+    --card-background-color: #2b343a;
+    --greyED: #1a1a1a;
+    --blueBE: #2585da;
+    --blueBE-nav: #1a1a1a;
+    --blueF2: #58657e;
+    --green95: #5ac15a;
+    --red80: #ff6347;
+    --yellow8B: #f2c230;
+    --black20: #fff;
+    --grey74: #c3c1c1;
+    --grey274-input: #fff;
+    --grey274-tabs: #e0e0e0;
+    --grey89: #b0b2b5;
+    --grey50: #c0c0c0;
+    --grey67: #bebebe;
+    --grey54: #c3c1c1;
+    --grey59: #c3c1c1;
+    --greyF1: #1a1a1a;
+    --white-input: #2B343A;
+    --white-tab: #20282D;
+    --white-transparent: transparent;
+    --white-bg: #2f2f2f;
+    --grey71: white;
+}

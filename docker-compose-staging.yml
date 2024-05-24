@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  production-verification-frontend-staging:
+    image: manulrnd/production-verification-frontend:staging
+    build:
+      dockerfile: ./client/Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1
+    volumes:
+      - pv-frontend-stage:/app/build
+      - pnpm-store-stage:/pnpm-store
+    environment:
+      - NODE_ENV=staging
+      
+  nginx-staging:
+    image: nginx:latest
+    container_name: pv-nginx-staging
+    ports:
+      - "89:80"
+    volumes:
+      - ./conf/staging/nginx.conf:/etc/nginx/nginx.conf:ro
+      - pv-frontend-stage:/usr/share/nginx/html
+    depends_on:
+      - production-verification-frontend-staging
+volumes:
+  pv-frontend-stage:
+  pnpm-store-stage:

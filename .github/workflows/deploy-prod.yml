@@ -1,0 +1,35 @@
+name: Deploy Production Verficiation frontend to Production server
+
+on:
+  pull_request:
+    branches:
+      - prod
+    paths:
+      - "client/**"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: [prod, pv-prod]
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_LOGIN }}" --password-stdin
+
+      - name: Stop and remove containers
+        run: |
+          docker system prune -f
+          docker compose -f docker-compose-production.yml down --volumes
+          docker compose -f docker-compose-production.yml rm -f
+          docker images --filter "dangling=true" -q | xargs -r docker rmi -f
+          docker volume ls -qf dangling=true | xargs -r docker volume rm
+
+      - name: Build and start Docker images
+        run: |
+          docker compose -f docker-compose-production.yml build --no-cache
+          docker compose -f docker-compose-production.yml up -d
