@@ -6,6 +6,11 @@ pipeline {
         PASSWORD = vault path: 'secrets/creds/aayadev', key: 'password'
     }
 
+    triggers {
+        // Trigger only on pull request to "stage" branch
+        githubPullRequest sourceBranch: '!(stage)', targetBranch: 'stage'
+    }
+    
     stages {
         stage("read vault keys") {
             steps {
