@@ -2,8 +2,22 @@ pipeline {
     agent any // Adjust this label according to your Jenkins setup
 
     environment {
-        DOCKER_LOGIN = credentials('docker-credentials-id') // Jenkins credentials ID for Docker
-        DOCKER_PASS = credentials('docker-password-id') // Jenkins credentials ID for Docker password
+        USERNAME = vault path: 'secrets/creds/aayadev', key: 'username'
+        PASSWORD = vault path: 'secrets/creds/aayadev', key: 'password'
+    }
+
+    triggers {
+        // Trigger only on pull request to "stage" branch
+        githubPullRequest sourceBranch: '!(stage)', targetBranch: 'stage'
+    }
+    
+    stages {
+        stage("read vault keys") {
+            steps {
+                echo "${USERNAME}"
+                echo "${PASSWORD}"
+            }
+        }
     }
 
     stages {
