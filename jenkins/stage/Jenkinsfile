@@ -8,9 +8,10 @@ pipeline {
 
     triggers {
         // Trigger only on pull request to "stage" branch
-        githubPullRequest sourceBranch: '!(stage)', targetBranch: 'stage'
+        githubPullRequests sourceBranch: '!(stage)', targetBranch: 'stage'
     }
-    
+
+
     stages {
         stage("read vault keys") {
             steps {
@@ -18,9 +19,7 @@ pipeline {
                 echo "${PASSWORD}"
             }
         }
-    }
-
-    stages {
+        
         stage('Checkout') {
             steps {
                 checkout scm
