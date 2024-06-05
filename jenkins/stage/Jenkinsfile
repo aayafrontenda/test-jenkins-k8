@@ -7,16 +7,17 @@ pipeline {
     }
 
     triggers {
-        // Trigger only on pull request to "stage" branch
-        githubPullRequests sourceBranch: '!(stage)', targetBranch: 'stage'
+        // Use GitHub hooks for triggering builds
+        githubPullRequest triggerMode: 'HEAVY_HOOKS'
     }
 
-
     stages {
-        stage("read vault keys") {
+        stage("Check Branch") {
+            when {
+                expression { return env.CHANGE_TARGET == 'stage' }
+            }
             steps {
-                echo "${USERNAME}"
-                echo "${PASSWORD}"
+                echo "Triggering on target branch: ${env.CHANGE_TARGET}"
             }
         }
         
