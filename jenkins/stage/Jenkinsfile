@@ -7,11 +7,11 @@ pipeline {
     }
 
     triggers {
-        // Use GitHub hooks for triggering builds
-        githubPullRequests(
-            cron: 'H/1 * * * *', // Polls every 5 minutes
-            triggerPhrase: 'OK to test', // Trigger phrase for manual build
-            useGitHubHooks: true // Enables GitHub webhook
+        githubPullRequest(
+            spec: 'H/5 * * * *',
+            triggerMode: 'HEAVY_HOOKS',
+            events: [[event: 'Open']],
+            branchRestriction: [targetBranch: 'stage']
         )
     }
 
