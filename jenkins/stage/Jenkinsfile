@@ -8,12 +8,18 @@ pipeline {
     
     triggers {
         githubPullRequests(
-            cron: 'H/5 * * * *',
+            spec: 'H/5 * * * *',
             triggerMode: 'HEAVY_HOOKS',
             events: [
-                [$class: 'org.jenkinsci.plugins.github.pullrequest.events.GitHubPROpenEvent']
+                [
+                    event: 'Open', 
+                    $class: 'org.jenkinsci.plugins.github.pullrequest.events.GitHubPROpenEvent'
+                ]
             ],
-            branchRestriction: [targetBranch: 'stage']
+            branchRestriction: [
+                $class: 'org.jenkinsci.plugins.github.pullrequest.GitHubPRBranchRestriction',
+                targetBranch: 'stage'
+            ]
         )
     }
 
