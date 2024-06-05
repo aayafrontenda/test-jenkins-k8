@@ -7,7 +7,7 @@ pipeline {
     }
     
     triggers {
-        githubPullRequest(
+        githubPullRequests(
             cron: 'H/5 * * * *',
             triggerMode: 'HEAVY_HOOKS',
             events: [
