@@ -8,7 +8,7 @@ pipeline {
 
     triggers {
         // Use GitHub hooks for triggering builds
-        githubPullRequests triggerMode: 'HEAVY_HOOKS'
+        githubPullRequests()
     }
 
     stages {
