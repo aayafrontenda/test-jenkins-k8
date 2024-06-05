@@ -15,10 +15,6 @@ pipeline {
                     event: 'Open', 
                     $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent'
                 ]
-            ],
-            branchRestriction: [
-                $class: 'com.github.kostyasha.github.integration.branch.events.impl.GitHubBranchRestrictionFilter',
-                targetBranch: 'stage'
             ]
         )
     }
