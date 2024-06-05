@@ -5,12 +5,14 @@ pipeline {
         USERNAME = vault path: 'secrets/creds/aayadev', key: 'username'
         PASSWORD = vault path: 'secrets/creds/aayadev', key: 'password'
     }
-
+    
     triggers {
-        githubPullRequests(
-            spec: 'H/5 * * * *',
+        githubPullRequest(
+            cron: 'H/5 * * * *',
             triggerMode: 'HEAVY_HOOKS',
-            events: [[event: 'Open']],
+            events: [
+                [$class: 'org.jenkinsci.plugins.github.pullrequest.events.GitHubPROpenEvent']
+            ],
             branchRestriction: [targetBranch: 'stage']
         )
     }
