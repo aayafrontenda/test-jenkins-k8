@@ -33,7 +33,6 @@ pipeline {
             }
             steps {
                 script {
-                    echo VAULT_TOKEN
                     echo "Success"
                 }
             }
@@ -45,7 +44,7 @@ pipeline {
                     try {
                         sh '''
                             export VAULT_ADDR='http://127.0.0.1:8200'
-                            vault login -$VAULT_TOKEN
+                            echo ${VAULT_TOKEN} | vault login -
                             vault kv get secret/creds/aayadev
                         '''
                     } catch (Exception e) {
