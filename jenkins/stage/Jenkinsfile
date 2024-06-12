@@ -1,6 +1,10 @@
 pipeline {
     agent any // Adjust this label according to your Jenkins setup
-    
+
+    environment {
+        VAULT_TOKEN = credentials('vault-token') 
+    }   
+
     triggers {
         githubPullRequests(
             spec: 'H/5 * * * *',
@@ -27,24 +31,13 @@ pipeline {
             }
         }
 
-        stage('Retrieve Vault Token') {
-            environment {
-                VAULT_TOKEN = credentials('vault-token') 
-            }
-            steps {
-                script {
-                    echo "Success"
-                }
-            }
-        }
-
         stage('Test Vault Connection') {
             steps {
                 script {
                     try {
                         sh '''
                             export VAULT_ADDR='http://127.0.0.1:8200'
-                            echo \$VAULT_TOKEN | vault login -
+                            vault login ${VAULT_TOKEN}
                             vault kv get secret/creds/aayadev
                         '''
                     } catch (Exception e) {
