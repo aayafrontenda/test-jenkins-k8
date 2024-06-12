@@ -15,9 +15,6 @@ jobs:
       matrix:
         runner: [stage]
     steps:
-      - name: "Print GitHub context"
-        run: echo "${{ toJson(github) }}"
-
       - name: "Trigger jenkins job"
         uses: umutcolak/jenkins-trigger-job@main
         with:
@@ -25,4 +22,4 @@ jobs:
           user: "admin"
           jenkins-token: ${{secrets.JENKINS_TOKEN}}
           job-name: "test-pv-stage"
-          job-params: '{"branch_name": "${{ github.event.pull_request.head.ref }}"}'
+          job-params: '{"branch_name": "${{github.event.pull_request.head.ref}}"}'
