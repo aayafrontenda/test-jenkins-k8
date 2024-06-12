@@ -5,15 +5,15 @@ pipeline {
         VAULT_TOKEN = credentials('vault-token') 
     }   
 
-    triggers {
-        githubPullRequests(
-            spec: 'H/5 * * * *',
-            triggerMode: 'HEAVY_HOOKS',
-            events: [
-                [ $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent' ]
-            ]
-        )
-    }
+    // triggers {
+    //     githubPullRequests(
+    //         spec: 'H/5 * * * *',
+    //         triggerMode: 'HEAVY_HOOKS',
+    //         events: [
+    //             [ $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent' ]
+    //         ]
+    //     )
+    // }
 
     stages {
         stage('Debug Environment') {

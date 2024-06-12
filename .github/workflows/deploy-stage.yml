@@ -1,4 +1,4 @@
-name: Profuction Verification frontend to Staging server
+name: Profuction Verification frontend to Test Staging server
 # hehehe
 on:
   pull_request:
@@ -13,23 +13,13 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [stage, pv-stage]
+        runner: [stage]
     steps:
-      - name: Set up repository
-        uses: actions/checkout@v2
-
-      - name: Log in to Docker
-        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_LOGIN }}" --password-stdin
-
-      - name: Stop and remove containers
-        run: |
-          docker system prune -f
-          docker compose -f docker-compose-staging.yml down --volumes
-          docker compose -f docker-compose-staging.yml rm -f
-          docker images --filter "dangling=true" -q | xargs -r docker rmi -f
-          docker volume ls -qf dangling=true | xargs -r docker volume rm
-
-      - name: Build and start Docker images
-        run: |
-          docker compose -f docker-compose-staging.yml build --no-cache
-          docker compose -f docker-compose-staging.yml up -d
+      - name: "Trigger jenkins job"
+        uses: umutcolak/jenkins-trigger-job@main
+        with:
+          jenkins-url: "http://localhost:8080"
+          user: "admin"
+          jenkins-token: ${{secrets.JENKINS_TOKEN}}
+          job-name: "test-pv-stage"
+          job-params: '{"branch_name": "${{github.ref}}"}'
