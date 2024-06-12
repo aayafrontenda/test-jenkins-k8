@@ -46,6 +46,7 @@ pipeline {
                             export VAULT_ADDR='http://127.0.0.1:8200'
                             export VAULT_ADDR='http://127.0.0.1:8200'
                             export VAULT_ADDR='http://127.0.0.1:8200'
+                            export VAULT_ADDR='http://127.0.0.1:8200'
                             vault login $VAULT_TOKEN
                             vault kv get secret/creds/aayadev
                         '''
