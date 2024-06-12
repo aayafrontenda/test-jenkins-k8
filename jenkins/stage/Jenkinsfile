@@ -34,7 +34,7 @@ pipeline {
 
         stage('Retrieve Vault Token') {
             environment {
-                VAULT_TOKEN = credentials('vault-token') // Retrieve the Vault token from Jenkins credentials
+                VAULT_TOKEN = credentials('vault-token') 
             }
             steps {
                 script {
