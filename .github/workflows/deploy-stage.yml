@@ -18,7 +18,7 @@ jobs:
       - name: "Trigger jenkins job"
         uses: umutcolak/jenkins-trigger-job@main
         with:
-          jenkins-url: "https://hkdk.events/m7qchtqimk7jyp"
+          jenkins-url: "http://172.25.142.178:8080/"
           user: "admin"
           jenkins-token: ${{secrets.JENKINS_TOKEN}}
           job-name: "test-pv-stage"
