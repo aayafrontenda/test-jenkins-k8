@@ -32,13 +32,24 @@ pipeline {
             }
         }
 
+        stage('Retrieve Vault Token') {
+            environment {
+                VAULT_TOKEN = credentials('vault-token') // Retrieve the Vault token from Jenkins credentials
+            }
+            steps {
+                script {
+                    echo "Vault token retrieved successfully"
+                }
+            }
+        }
+
         stage('Test Vault Connection') {
             steps {
                 script {
                     try {
                         sh '''
                             export VAULT_ADDR='http://127.0.0.1:8200'
-                            vault login hvs.PsQEZYMBlbmNbxcWX7AN2TVF
+                            vault login $VAULT_TOKEN
                             vault kv get secret/creds/aayadev
                         '''
                     } catch (Exception e) {
@@ -46,6 +57,7 @@ pipeline {
                     }
                 }
             }
+        }
         
         stage('Checkout') {
             steps {
