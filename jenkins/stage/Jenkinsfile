@@ -7,32 +7,35 @@ pipeline {
     }
     
     triggers {
-        githubPullRequests(
+        githubPullRequest(
             spec: 'H/5 * * * *',
             triggerMode: 'HEAVY_HOOKS',
             events: [
-                [
-                    event: 'Open', 
-                    $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent'
-                ]
+                [ $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent' ]
             ]
         )
     }
 
     stages {
-        stage('Check Branch') {
-            when {
-                expression { return env.CHANGE_TARGET == 'stage' }
+        stage('Debug Environment') {
+            steps {
+                script {
+                    echo "CHANGE_TARGET: ${env.CHANGE_TARGET}"
+                }
             }
+        }
+
+        // Temporarily remove the 'when' condition for troubleshooting
+        stage('Check Branch') {
             steps {
                 echo "Triggering on target branch: ${env.CHANGE_TARGET}"
             }
         }
 
-        stage('Read vault keys') {
+        stage('Read Vault Keys') {
             steps {
-                echo "${USERNAME}"
-                echo "${PASSWORD}"
+                echo "USERNAME: ${env.USERNAME}"
+                echo "PASSWORD: ${env.PASSWORD}"
             }
         }
         
