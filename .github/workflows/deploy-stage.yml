@@ -15,6 +15,9 @@ jobs:
       matrix:
         runner: [stage]
     steps:
+      - name: "Print GitHub context"
+        run: echo "${{ toJson(github) }}"
+
       - name: "Trigger jenkins job"
         uses: umutcolak/jenkins-trigger-job@main
         with:
