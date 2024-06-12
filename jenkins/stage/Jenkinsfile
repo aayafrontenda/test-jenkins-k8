@@ -38,8 +38,6 @@ pipeline {
                         sh '''
                             export VAULT_ADDR='http://127.0.0.1:8200'
                             vault login ${VAULT_TOKEN}
-                            vault kv get -field='username' secrets/creds/aayadev
-                            vault kv get -field='password' secrets/creds/aayadev 
                         '''
                     } catch (Exception e) {
                         echo "Error connecting to Vault: ${e.message}"
@@ -57,9 +55,12 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    sh """
-                        echo \$DOCKER_PASS | docker login -u \$DOCKER_LOGIN --password-stdin
-                    """
+                    sh '''
+                        export VAULT_ADDR=http://127.0.0.1:8200
+                        DOCKER_LOGIN=$(vault kv get -field='username' secrets/docker)
+                        DOCKER_PASS=$(vault kv get -field='password' secrets/docker)
+                        echo $DOCKER_PASS | docker login -u $DOCKER_LOGIN --password-stdin
+                    '''
                 }
             }
         }
