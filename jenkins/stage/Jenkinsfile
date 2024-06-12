@@ -1,10 +1,5 @@
 pipeline {
     agent any // Adjust this label according to your Jenkins setup
-
-    environment {
-        USERNAME = vault path: 'secrets/creds/aayadev', key: 'username'
-        PASSWORD = vault path: 'secrets/creds/aayadev', key: 'password'
-    }
     
     triggers {
         githubPullRequests(
