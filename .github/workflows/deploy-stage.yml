@@ -18,8 +18,8 @@ jobs:
       - name: "Trigger jenkins job"
         uses: umutcolak/jenkins-trigger-job@main
         with:
-          jenkins-url: "http://localhost:8080"
+          jenkins-url: "http://172.25.142.178:8080/"
           user: "admin"
           jenkins-token: ${{secrets.JENKINS_TOKEN}}
           job-name: "test-pv-stage"
-          job-params: '{"branch_name": "${{github.ref}}"}'
+          job-params: '{"branch_name": "${{github.event.pull_request.head.ref}}"}'
