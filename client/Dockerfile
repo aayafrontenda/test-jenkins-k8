@@ -5,6 +5,8 @@ FROM node:22-slim as builder
 ENV PNPM_STORE="/pnpm-store"
 
 # Include the PNPM store in the PATH for easy access to binaries
+# Include the PNPM store in the PATH for easy access to binaries
+# Include the PNPM store in the PATH for easy access to binaries
 ENV PATH="/pnpm:$PATH"
 
 # Enable corepack to manage package managers
