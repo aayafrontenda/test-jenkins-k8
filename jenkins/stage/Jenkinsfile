@@ -65,30 +65,30 @@ pipeline {
             }
         }
 
-        stage('Stop and Remove Containers') {
-            steps {
-                script {
-                    sh '''
-                        docker system prune -f
-                        docker compose -f docker-compose-staging.yml down --volumes
-                        docker compose -f docker-compose-staging.yml rm -f
-                        docker images --filter "dangling=true" -q | xargs -r docker rmi -f
-                        docker volume ls -qf dangling=true | xargs -r docker volume rm
-                    '''
-                }
-            }
-        }
+        // stage('Stop and Remove Containers') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 docker system prune -f
+        //                 docker compose -f docker-compose-staging.yml down --volumes
+        //                 docker compose -f docker-compose-staging.yml rm -f
+        //                 docker images --filter "dangling=true" -q | xargs -r docker rmi -f
+        //                 docker volume ls -qf dangling=true | xargs -r docker volume rm
+        //             '''
+        //         }
+        //     }
+        // }
 
-        stage('Build and Start Docker Images') {
-            steps {
-                script {
-                    sh '''
-                        docker compose -f docker-compose-staging.yml build --no-cache
-                        docker compose -f docker-compose-staging.yml up -d
-                    '''
-                }
-            }
-        }
+        // stage('Build and Start Docker Images') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 docker compose -f docker-compose-staging.yml build --no-cache
+        //                 docker compose -f docker-compose-staging.yml up -d
+        //             '''
+        //         }
+        //     }
+        // }
     }
 
     post {
