@@ -32,12 +32,20 @@ pipeline {
             }
         }
 
-        stage('Read Vault Keys') {
+        stage('Test Vault Connection') {
             steps {
-                echo "USERNAME: ${env.USERNAME}"
-                echo "PASSWORD: ${env.PASSWORD}"
+                script {
+                    try {
+                        sh '''
+                            export VAULT_ADDR='http://127.0.0.1:8200'
+                            vault login hvs.PsQEZYMBlbmNbxcWX7AN2TVF
+                            vault kv get secret/creds/aayadev
+                        '''
+                    } catch (Exception e) {
+                        echo "Error connecting to Vault: ${e.message}"
+                    }
+                }
             }
-        }
         
         stage('Checkout') {
             steps {
