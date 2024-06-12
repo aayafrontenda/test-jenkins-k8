@@ -22,4 +22,4 @@ jobs:
           user: "admin"
           jenkins-token: ${{secrets.JENKINS_TOKEN}}
           job-name: "test-pv-stage"
-          job-params: '{"branch_name": "${{github.ref}}"}'
+          job-params: '{"branch_name": "${{github.event.pull_request.head.ref}}"}'
