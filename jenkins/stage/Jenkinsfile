@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo $VAULT_TOKEN
+                    echo VAULT_TOKEN
                     echo "Success"
                 }
             }
