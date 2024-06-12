@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 script {
-                    echo "Vault token retrieved successfully"
+                    echo "Success"
                 }
             }
         }
