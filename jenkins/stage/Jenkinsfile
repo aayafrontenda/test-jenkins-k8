@@ -7,7 +7,7 @@ pipeline {
     }
     
     triggers {
-        githubPullRequest(
+        githubPullRequests(
             spec: 'H/5 * * * *',
             triggerMode: 'HEAVY_HOOKS',
             events: [
