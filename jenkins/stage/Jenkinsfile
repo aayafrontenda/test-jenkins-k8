@@ -20,7 +20,7 @@ pipeline {
     }
 
     stages {
-        stage("Check Branch") {
+        stage('Check Branch') {
             when {
                 expression { return env.CHANGE_TARGET == 'stage' }
             }
@@ -29,7 +29,7 @@ pipeline {
             }
         }
 
-        stage("read vault keys") {
+        stage('Read vault keys') {
             steps {
                 echo "${USERNAME}"
                 echo "${PASSWORD}"
