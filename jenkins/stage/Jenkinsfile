@@ -13,8 +13,7 @@ pipeline {
             events: [
                 [
                     event: 'Open', 
-                    $class: 'org.jenkinsci.plugins.github.pullre
-                    quest.events.impl.GitHubPROpenEvent'
+                    $class: 'org.jenkinsci.plugins.github.pullrequest.events.impl.GitHubPROpenEvent'
                 ]
             ]
         )
@@ -29,7 +28,7 @@ pipeline {
                 echo "Triggering on target branch: ${env.CHANGE_TARGET}"
             }
         }
-        
+
         stage("read vault keys") {
             steps {
                 echo "${USERNAME}"
